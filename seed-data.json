@@ -1,0 +1,22 @@
+{
+  "venues": [
+    {"id":"banketka-a","code":"A","name":"Banketka A","type":"internal","color":"#b57d46","active":true},
+    {"id":"banketka-b","code":"B","name":"Banketka B","type":"internal","color":"#5b7892","active":true},
+    {"id":"banketka-c","code":"C","name":"Banketka C","type":"internal","color":"#6d8a63","active":true},
+    {"id":"banketka-d","code":"D","name":"Banketka D","type":"internal","color":"#181818","active":true},
+    {"id":"external","code":"EXT","name":"Externá lokalita","type":"external","color":"#7f628e","active":true},
+    {"id":"production","code":"PROD","name":"Len výroba cateringu","type":"production","color":"#a06a34","active":true}
+  ],
+  "exampleEvent": {
+    "eventId":"SC-2026-0101",
+    "type":"Svadba",
+    "date":"2026-10-01",
+    "startTime":"14:00",
+    "guestCount":100,
+    "status":"confirmed",
+    "clientId":"client-martina-novakova",
+    "venue":{"code":"D","name":"Banketka D","type":"internal"},
+    "createdAt":"SERVER_TIMESTAMP",
+    "updatedAt":"SERVER_TIMESTAMP"
+  }
+}

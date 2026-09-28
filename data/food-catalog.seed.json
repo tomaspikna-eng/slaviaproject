@@ -1,0 +1,37 @@
+{
+  "categories": {
+    "predjedla": [
+      "Caprese",
+      "Paštéta s chutney",
+      "Bruschetta"
+    ],
+    "polievky": [
+      "Hovädzí vývar",
+      "Cesnaková polievka",
+      "Paradajková polievka"
+    ],
+    "hlavne_jedla": [
+      "Grilovaný bravčový steak",
+      "Bravčová panenka",
+      "Kuracie stripsy",
+      "Kuracie supreme",
+      "Hovädzí steak",
+      "Pečené kačacie stehno"
+    ],
+    "vegetarianske": [
+      "Vyprážaný syr",
+      "Grilovaný hermelín"
+    ],
+    "prilohy": [
+      "Ryža",
+      "Pečené zemiaky",
+      "Zemiakové pyré",
+      "Gratinované zemiaky",
+      "Hranolky",
+      "Grilovaná zelenina",
+      "Šalát",
+      "Kuskus"
+    ]
+  },
+  "notes": "Starter catalog only. Production catalog will live in Firestore and support tags, allergens, cuisine, ingredients and aliases."
+}
