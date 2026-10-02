@@ -73,3 +73,19 @@ Po pripojení Firebase sa mock dáta v `index.html` nahradia reálnym čítaním
 
 ## Menu builder
 V2 pridáva skladbu menu v kroku Nová akcia. Produkčne sa katalóg jedál presunie do Firestore kolekcie `foods` a prílohy môžu byť samostatné položky alebo tagované jedlá. Podporované budú aliasy, kategórie, alergény, kuchyňa/krajina, ingrediencie a kombinované prílohy s percentuálnym pomerom.
+
+
+## Nová akcia – rozšírenie V3
+Formulár pokračuje po výbere jedál ďalšími službami:
+6. Grilovanie
+7. Torta a zákusky
+8. Nápoje / bar
+9. Švédske stoly
+10. Výzdoba sály
+11. Hudba
+12. Fotograf / kameraman
+13. Ubytovanie hostí
+14. Doprava / transfer
+15. Poznámky a špeciálne požiadavky
+
+Sekcie Grilovanie, Torta a zákusky, Nápoje / bar, Švédske stoly a Výzdoba majú rozbaľovanie ÁNO/NIE.

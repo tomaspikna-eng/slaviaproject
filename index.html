@@ -329,6 +329,114 @@ h2{font:500 31px Georgia,serif;margin:3px 0} .sub{color:var(--muted);margin:4px 
           <option value="Kuskus">
         </datalist>
       </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>6. Grilovanie</h3><span class="id">VOLITEĽNÉ</span></div>
+        <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+          <label><input type="radio" name="grill" value="yes" data-toggle-target="grillDetails"> ÁNO</label>
+          <label><input type="radio" name="grill" value="no" data-toggle-target="grillDetails" checked> NIE</label>
+        </div>
+        <div id="grillDetails" class="service-details" style="display:none">
+          <div class="note">Samostatná služba s vlastnou prípravou, personálom a miestom realizácie. Môže byť súčasťou internej aj externej akcie.</div>
+          <div class="course-list" style="margin-top:10px">
+            <div class="course"><b>Čo sa bude grilovať</b><p><input placeholder="Mäso, zelenina, syry, ďalšie položky..." style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px"></p></div>
+            <div class="course"><b>Počet hostí / čas</b><p><input type="number" min="0" placeholder="Počet hostí" style="width:140px;padding:10px;border:1px solid var(--line);border-radius:9px"> <input type="time" style="padding:10px;border:1px solid var(--line);border-radius:9px"></p></div>
+            <div class="course"><b>Fotogaléria</b><p>Pri reálnom nasadení sa sem napojí galéria ukážok grilovania.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>7. Torta a zákusky</h3><span class="id">VOLITEĽNÉ</span></div>
+        <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+          <label><input type="radio" name="cake" value="yes" data-toggle-target="cakeDetails"> ÁNO</label>
+          <label><input type="radio" name="cake" value="no" data-toggle-target="cakeDetails" checked> NIE</label>
+        </div>
+        <div id="cakeDetails" class="service-details" style="display:none">
+          <div class="course-list">
+            <div class="course"><b>Torta</b><p><select style="padding:10px;border:1px solid var(--line);border-radius:9px"><option>Vlastná výroba Slávie</option><option>Externý dodávateľ</option><option>Dodá klient</option></select></p></div>
+            <div class="course"><b>Zákusky / dezerty</b><p><input placeholder="Druhy, množstvo, poznámka..." style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px"></p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>8. Nápoje / bar</h3><span class="id">VOLITEĽNÉ</span></div>
+        <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+          <label><input type="radio" name="bar" value="yes" data-toggle-target="barDetails"> ÁNO</label>
+          <label><input type="radio" name="bar" value="no" data-toggle-target="barDetails" checked> NIE</label>
+        </div>
+        <div id="barDetails" class="service-details" style="display:none">
+          <div class="course-list">
+            <div class="course"><b>Forma nápojového servisu</b><p><select style="padding:10px;border:1px solid var(--line);border-radius:9px"><option>Kompletný bar Slávie</option><option>Čiastočný servis</option><option>Vlastné nápoje klienta</option><option>Kombinácia</option></select></p></div>
+            <div class="course"><b>Požiadavky</b><p><input placeholder="Víno, pivo, destiláty, nealko, miešané nápoje..." style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px"></p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>9. Švédske stoly</h3><span class="id">VOLITEĽNÉ</span></div>
+        <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+          <label><input type="radio" name="buffet" value="yes" data-toggle-target="buffetDetails"> ÁNO</label>
+          <label><input type="radio" name="buffet" value="no" data-toggle-target="buffetDetails" checked> NIE</label>
+        </div>
+        <div id="buffetDetails" class="service-details" style="display:none">
+          <div class="note">Švédske stoly evidujeme oddelene od klasického servírovaného menu. Môžu byť studené, teplé alebo kombinované.</div>
+          <div class="course-list" style="margin-top:10px">
+            <div class="course"><b>Typ bufetu</b><p><select style="padding:10px;border:1px solid var(--line);border-radius:9px"><option>Studený</option><option>Teplý</option><option>Kombinovaný</option></select></p></div>
+            <div class="course"><b>Obsah</b><p><textarea placeholder="Jedlá, prílohy, šaláty, dezerty, ďalšie položky..." style="width:100%;min-height:78px;padding:10px;border:1px solid var(--line);border-radius:9px"></textarea></p></div>
+            <div class="course"><b>Fotogaléria</b><p>Pri reálnom nasadení sa sem napojí galéria ukážok švédskych stolov.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>10. Výzdoba sály</h3><span class="id">VOLITEĽNÉ</span></div>
+        <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+          <label><input type="radio" name="decor" value="yes" data-toggle-target="decorDetails"> ÁNO</label>
+          <label><input type="radio" name="decor" value="no" data-toggle-target="decorDetails" checked> NIE</label>
+        </div>
+        <div id="decorDetails" class="service-details" style="display:none">
+          <div class="course-list">
+            <div class="course"><b>Štýl / farby</b><p><input placeholder="Napr. krémová + zlatá, rustikálna, minimalistická..." style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px"></p></div>
+            <div class="course"><b>Rozsah výzdoby</b><p><textarea placeholder="Stoly, kvety, návleky, dekorácie, fotostena..." style="width:100%;min-height:78px;padding:10px;border:1px solid var(--line);border-radius:9px"></textarea></p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>11. Hudba</h3></div>
+        <div class="course-list">
+          <div class="course">
+            <b>Typ hudby</b>
+            <p><select id="musicType" style="padding:10px;border:1px solid var(--line);border-radius:9px">
+              <option>DJ</option><option>Kapela</option><option>Vlastná</option><option>Na odporúčanie</option>
+            </select></p>
+          </div>
+          <div class="course"><b>Kontakt / technické požiadavky</b><p><textarea placeholder="Názov DJ/kapely, kontakt, čas príchodu, ozvučenie, elektrina..." style="width:100%;min-height:78px;padding:10px;border:1px solid var(--line);border-radius:9px"></textarea></p></div>
+        </div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>12. Fotograf / kameraman</h3></div>
+        <div class="course-list"><div class="course"><p><select style="padding:10px;border:1px solid var(--line);border-radius:9px"><option>Bez požiadavky</option><option>Vlastný</option><option>Na odporúčanie</option></select></p><p><input placeholder="Kontakt / poznámka" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px"></p></div></div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>13. Ubytovanie hostí</h3></div>
+        <div class="course-list"><div class="course"><p><select style="padding:10px;border:1px solid var(--line);border-radius:9px"><option>Nie</option><option>Áno – klient rieši sám</option><option>Áno – potrebuje odporúčanie</option></select></p><p><input type="number" min="0" placeholder="Počet osôb" style="width:140px;padding:10px;border:1px solid var(--line);border-radius:9px"></p></div></div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>14. Doprava / transfer</h3></div>
+        <div class="course-list"><div class="course"><p><select style="padding:10px;border:1px solid var(--line);border-radius:9px"><option>Nie</option><option>Áno – vlastná doprava klienta</option><option>Áno – potrebuje zabezpečiť</option></select></p><p><textarea placeholder="Odkiaľ, kam, počet osôb, približné časy..." style="width:100%;min-height:78px;padding:10px;border:1px solid var(--line);border-radius:9px"></textarea></p></div></div>
+      </div>
+
+      <div class="card section">
+        <div class="section-title"><h3>15. Poznámky a špeciálne požiadavky</h3></div>
+        <textarea placeholder="Alergie, detské menu, špeciálny harmonogram, vlastné dodávky, technické požiadavky..." style="width:100%;min-height:120px;padding:12px;border:1px solid var(--line);border-radius:9px"></textarea>
+      </div>
+
     </div>
 
     <div style="display:flex;flex-direction:column;gap:16px">
@@ -461,6 +569,17 @@ document.getElementById('addMenuCourse')?.addEventListener('click',()=>{
   row.className='course menu-course';
   row.innerHTML='<div class="course-top"><b>Ďalší chod</b><span>voliteľné</span></div><input class="dish-search" list="dishCatalog" placeholder="Vyhľadať jedlo..." style="width:100%;margin-top:8px;padding:10px;border:1px solid var(--line);border-radius:9px">';
   wrap.appendChild(row);
+});
+
+
+document.querySelectorAll('input[type="radio"][data-toggle-target]').forEach((radio)=>{
+  radio.addEventListener('change',()=>{
+    const target=document.getElementById(radio.dataset.toggleTarget);
+    if(!target) return;
+    const group=document.querySelectorAll(`input[name="${radio.name}"][data-toggle-target="${radio.dataset.toggleTarget}"]`);
+    const selected=[...group].find(el=>el.checked);
+    target.style.display=selected && selected.value==='yes' ? 'block' : 'none';
+  });
 });
 
 </script>
