@@ -27,6 +27,8 @@ const ED = {
     });
     document.getElementById('sendOtpBtn')?.addEventListener('click',()=>this.sendOtp());
     document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();this.loginOtp()});
+    document.getElementById('loginBtn')?.addEventListener('click',()=>document.getElementById('loginOverlay')?.classList.remove('hidden'));
+    document.getElementById('closeLoginBtn')?.addEventListener('click',()=>document.getElementById('loginOverlay')?.classList.add('hidden'));
     document.getElementById('logoutBtn')?.addEventListener('click',()=>this.logout());
     document.getElementById('newEventForm')?.addEventListener('submit',e=>{e.preventDefault();this.createEvent()});
     document.getElementById('foodSearch')?.addEventListener('input',e=>this.renderFoodSearch(e.target.value));
@@ -89,9 +91,11 @@ const ED = {
   },
 
   applyAuth(){
-    document.getElementById('loginOverlay')?.classList.toggle('hidden',!!this.currentUser);
+    document.getElementById('loginOverlay')?.classList.add('hidden');
     document.querySelectorAll('[data-admin-only]').forEach(el=>el.classList.toggle('hidden',this.profile?.role!=='admin'));
-    document.getElementById('userLabel').textContent=this.currentUser ? `${this.profile?.display_name||this.currentUser.email} · ${this.profile?.role||'—'}` : 'neprihlásený';
+    document.getElementById('userLabel').textContent=this.currentUser ? `${this.profile?.display_name||this.currentUser.email} · ${this.profile?.role||'—'}` : 'verejný režim';
+    document.getElementById('loginBtn')?.classList.toggle('hidden',!!this.currentUser);
+    document.getElementById('logoutBtn')?.classList.toggle('hidden',!this.currentUser);
   },
 
   loginStatus(msg){ const el=document.getElementById('loginStatus'); if(el) el.textContent=msg; },
@@ -170,7 +174,6 @@ const ED = {
   },
 
   show(id){
-    if(!this.currentUser)return;
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     document.getElementById(id)?.classList.add('active');
     document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
