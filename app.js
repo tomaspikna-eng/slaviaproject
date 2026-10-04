@@ -13,9 +13,13 @@ const ED = {
   async init(){
     this.bind();
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
-    await this.restoreSession();
-    if(this.currentUser) await this.loadAll();
-    this.applyAuth();
+    this.applyBetaMode();
+    this.renderDashboard();
+    this.renderEvents();
+    this.renderInquiries();
+    this.renderCalendar();
+    this.renderFoodSearch('');
+    this.renderNotifications();
   },
 
   bind(){
@@ -24,13 +28,7 @@ const ED = {
       const go=e.target.closest('[data-go]'); if(go){ this.show(go.dataset.go); return; }
       const ev=e.target.closest('[data-event-id]'); if(ev){ this.currentEventId=ev.dataset.eventId; this.show('event'); return; }
       const q=e.target.closest('[data-inquiry-action]'); if(q){ this.handleInquiry(q.dataset.inquiryAction,q.dataset.id); return; }
-    });
-    document.getElementById('sendOtpBtn')?.addEventListener('click',()=>this.sendOtp());
-    document.getElementById('loginForm')?.addEventListener('submit',e=>{e.preventDefault();this.loginOtp()});
-    document.getElementById('loginBtn')?.addEventListener('click',()=>document.getElementById('loginOverlay')?.classList.remove('hidden'));
-    document.getElementById('closeLoginBtn')?.addEventListener('click',()=>document.getElementById('loginOverlay')?.classList.add('hidden'));
-    document.getElementById('logoutBtn')?.addEventListener('click',()=>this.logout());
-    document.getElementById('newEventForm')?.addEventListener('submit',e=>{e.preventDefault();this.createEvent()});
+    });    document.getElementById('newEventForm')?.addEventListener('submit',e=>{e.preventDefault();this.createEvent()});
     document.getElementById('foodSearch')?.addEventListener('input',e=>this.renderFoodSearch(e.target.value));
     document.getElementById('addFoodForm')?.addEventListener('submit',e=>{e.preventDefault();this.addFood()});
     document.getElementById('pushBtn')?.addEventListener('click',()=>this.enablePush());
@@ -93,12 +91,17 @@ const ED = {
   applyAuth(){
     document.getElementById('loginOverlay')?.classList.add('hidden');
     document.querySelectorAll('[data-admin-only]').forEach(el=>el.classList.toggle('hidden',this.profile?.role!=='admin'));
-    document.getElementById('userLabel').textContent=this.currentUser ? `${this.profile?.display_name||this.currentUser.email} · ${this.profile?.role||'—'}` : 'verejný režim';
-    document.getElementById('loginBtn')?.classList.toggle('hidden',!!this.currentUser);
-    document.getElementById('logoutBtn')?.classList.toggle('hidden',!this.currentUser);
-  },
+    document.getElementById('userLabel').textContent=this.currentUser ? `${this.profile?.display_name||this.currentUser.email} · ${this.profile?.role||'—'}` : 'verejný režim';  },
 
   loginStatus(msg){ const el=document.getElementById('loginStatus'); if(el) el.textContent=msg; },
+
+  applyBetaMode(){
+    this.currentUser=null;
+    this.profile={role:'admin',display_name:'BETA'};
+    document.querySelectorAll('[data-admin-only]').forEach(el=>el.classList.remove('hidden'));
+    const label=document.getElementById('userLabel');
+    if(label) label.textContent='BETA · bez prihlásenia';
+  },
 
   async loadAll(){
     const eventCols='id,event_no,inquiry_id,client_id,event_type,event_date,start_time,prep_date,venue_id,external_location,guest_count,status,notes,created_by,updated_by,created_at,updated_at';
@@ -205,6 +208,7 @@ const ED = {
   },
 
   async handleInquiry(action,id){
+    if(!this.currentUser){ this.toast('BETA: zmeny v produkčnej databáze sú vypnuté'); return; }
     const q=this.state.inquiries.find(x=>x.id===id); if(!q)return;
     if(action==='contact' || action==='hold'){
       const status=action==='contact'?'contacted':'tentative';
@@ -258,6 +262,7 @@ const ED = {
   },
 
   async createEvent(){
+    if(!this.currentUser){ this.toast('BETA: uloženie do produkčnej databázy je vypnuté'); return; }
     const fd=new FormData(document.getElementById('newEventForm'));
     const guests=+fd.get('guests'), date=fd.get('date');
     const eventNo=`ED-${new Date(date).getFullYear()}-${String(Date.now()).slice(-4)}`;
@@ -291,6 +296,7 @@ const ED = {
   },
 
   async addFood(){
+    if(!this.currentUser){ this.toast('BETA: uloženie do produkčnej databázy je vypnuté'); return; }
     const map={'Predjedlo':'appetizer','Polievka':'soup','Hlavné jedlo':'main','Príloha':'side','Dezert':'dessert','Bufet':'buffet'};
     const name=document.getElementById('foodName').value.trim();if(!name)return;
     const payload={canonical_name:name,category:map[document.getElementById('foodCategory').value]||'other',cuisine:document.getElementById('foodCuisine').value||'European',allergens:document.getElementById('foodAllergens').value.split(',').map(x=>x.trim()).filter(Boolean),aliases:[]};
