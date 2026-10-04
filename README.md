@@ -1,91 +1,111 @@
-# Slávia Catering ERP
+# EventDesk — Slávia Catering beta V1
 
-Interný rezervačný a ERP systém pre Slávia Catering.
+Pilotná implementácia univerzálneho systému **EventDesk** pre Slávia Catering.
 
-## Aktuálny stav
+## Čo je funkčné v demo režime
 
-- klikateľný frontend prototyp
-- kalendár akcií
-- karta akcie s ID
-- Banketky A/B/C/D
-- externé lokality
-- zákazkový catering / len výroba
-- program akcie
-- menu a chody
-- interná kalkulácia podľa počtu hostí × cena/osoba
-- návrh skladu a inventúry
-- pripravený Firebase/Firestore základ
+- neverejný interný login (demo lokálne účty)
+- role `manager` a `admin`
+- dashboard
+- verejná stránka Rezervácie bez mien a interných údajov
+- dopyty a workflow: nový → kontaktovaný → predbežný → prevedený na akciu
+- kalendár priestorov
+- akcie a detail akcie
+- formulár Nová akcia s bodmi 1–15
+- menu/jedlá vrátane grilovania, torty/zákuskov, baru, švédskych stolov, výzdoby a ďalších služieb
+- databáza jedál a vyhľadávanie cez aliasy
+- push/Notification API základ + PWA service worker
+- sklad
+- admin-only financie
+- audit zmien
 
-## Súbory
+Demo údaje sú zatiaľ uložené do `localStorage`, takže sa dá celý proces preklikať bez backendu.
 
-- `index.html` – aktuálny frontend
-- `app-firestore.js` – základ pre napojenie Firestore
-- `firebase-config.example.js` – šablóna Firebase web configu
-- `firestore.rules` – návrh bezpečnostných pravidiel
-- `firestore.indexes.json` – indexy
-- `firebase.json` – Firebase Hosting/Firestore config
-- `seed-data.json` – ukážkové dáta a priestory
+### Demo login
 
-## Firebase setup
+- Admin: `admin@eventdesk.local` / `1111`
+- Manager 1: `manager1@eventdesk.local` / `2222`
+- Manager 2: `manager2@eventdesk.local` / `3333`
+- Manager 3: `manager3@eventdesk.local` / `4444`
 
-1. Vytvor nový Firebase projekt, napr. `slavia-catering-erp`.
-2. Zapni Firestore Database.
-3. Zapni Authentication > Email/Password.
-4. V Project settings vytvor Web App.
-5. Skopíruj `firebase-config.example.js` ako `firebase-config.js`.
-6. Doplň hodnoty z Firebase `firebaseConfig`.
-7. `firebase-config.js` sa zámerne necommitne do GitHubu.
+Tieto PINy sú iba demo. Produkčne sa nepoužijú.
 
-## Firestore model
+## Verejná rezervácia
 
-Hlavné kolekcie:
+Otvoriť `rezervacie/index.html`. Verejnosť vidí iba dostupnosť priestorov. Formulár vytvorí nezáväzný dopyt, nie automatickú záväznú rezerváciu.
 
-- `users`
-- `clients`
+## Supabase
+
+`schema.sql` obsahuje produkčný návrh databázy a RLS:
+
+- `profiles`
 - `venues`
+- `clients`
+- `inquiries`
 - `events`
+- `event_menu`
+- `event_services`
+- `event_timeline`
+- `foods`
+- `event_finance`
 - `inventory`
-- `stock`
+- `notifications`
+- `push_devices`
+- `audit_log`
+- `availability_blocks`
 
-Podkolekcie udalosti:
+Role sa majú zapisovať do `auth.users.raw_app_meta_data.role`, nie do používateľsky editovateľného `user_metadata`.
 
-- `events/{eventId}/timeline`
-- `events/{eventId}/menu`
-- `events/{eventId}/private/finance`
+V prehliadači sa používa iba Supabase **publishable key**. Secret/service-role kľúč nesmie byť vo frontende.
 
-Financie sú zámerne oddelené od hlavného event dokumentu kvôli oprávneniam.
+### Po vytvorení Supabase projektu
 
-## GitHub prvý commit
+1. Spustiť `schema.sql`.
+2. Spustiť `seed.sql`.
+3. Vytvoriť 4 používateľov v Supabase Auth.
+4. Nastaviť `app_metadata.role` na `manager` alebo `admin`.
+5. Skopírovať `supabase-config.example.js` na `supabase-config.js` a vložiť Project URL + publishable key.
+6. Nahradiť LocalStorage operácie v `app.js` volaniami podľa `supabase-adapter.js`.
+7. Otestovať RLS pre anon, manager a admin účet.
+8. Spustiť Supabase security/performance advisors a odstrániť prípadné upozornenia.
 
-```bash
-git init
-git add .
-git commit -m "Initial Slavia ERP prototype"
-git branch -M main
-git remote add origin <YOUR_GITHUB_REPO_URL>
-git push -u origin main
-```
+## Push notifikácie
 
-## Neskôr
+Aktuálna beta vie požiadať prehliadač o povolenie Notification API a obsahuje service worker. Skutočný vzdialený Web Push potrebuje ešte:
 
-Po pripojení Firebase sa mock dáta v `index.html` nahradia reálnym čítaním/zápisom z Firestore.
+- VAPID kľúče
+- uloženie subscriptions do `push_devices`
+- server/Edge Function, ktorá odošle push pri udalosti
+- HTTPS deployment
+
+Smartwatch zvyčajne zobrazí push, ktorý zrkadlí spárovaný telefón.
+
+## Nasadenie
+
+Je to statický projekt, takže sa dá nasadiť na Vercel bez build procesu. V produkcii odporúčané súbory v root adresári:
+
+- `index.html`
+- `rezervacie/index.html`
+- `styles.css`
+- `app.js`
+- `manifest.json`
+- `sw.js`
+
+SQL a dokumentačné súbory nemusia byť verejne routované.
+
+## Stav
+
+Toto je **funkčná beta prototypová vrstva**, nie produkčne zabezpečená verzia. Produkčný míľnik nastane po napojení Supabase Auth/DB, RLS testoch a reálnom Web Push backende.
 
 
-## Menu builder
-V2 pridáva skladbu menu v kroku Nová akcia. Produkčne sa katalóg jedál presunie do Firestore kolekcie `foods` a prílohy môžu byť samostatné položky alebo tagované jedlá. Podporované budú aliasy, kategórie, alergény, kuchyňa/krajina, ingrediencie a kombinované prílohy s percentuálnym pomerom.
+## Neon production backend
+- Project: `Eventdesk`
+- Project ID: `tiny-hat-60943195`
+- Database: `neondb`
+- Auth: Neon Managed Better Auth
+- Login: e-mail + OTP
+- Data API: enabled
+- App database URL (non-secret): `https://ep-rapid-haze-b51ajefp.c-7.us-east-2.aws.neon.tech/neondb`
+- Trusted production domain: `https://clubmanager.app`
 
-
-## Nová akcia – rozšírenie V3
-Formulár pokračuje po výbere jedál ďalšími službami:
-6. Grilovanie
-7. Torta a zákusky
-8. Nápoje / bar
-9. Švédske stoly
-10. Výzdoba sály
-11. Hudba
-12. Fotograf / kameraman
-13. Ubytovanie hostí
-14. Doprava / transfer
-15. Poznámky a špeciálne požiadavky
-
-Sekcie Grilovanie, Torta a zákusky, Nápoje / bar, Švédske stoly a Výzdoba majú rozbaľovanie ÁNO/NIE.
+The frontend now uses `@neondatabase/neon-js` directly from the browser.

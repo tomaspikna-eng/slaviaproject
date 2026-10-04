@@ -1,0 +1,9 @@
+{
+  "name": "EventDesk",
+  "short_name": "EventDesk",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f4f0e9",
+  "theme_color": "#24211f",
+  "icons": []
+}
